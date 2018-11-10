@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+echo $1
+NEW_PROJECT_PATH=$1
+NEW_PROJECT_SRC=$NEW_PROJECT_PATH/src
+NEW_PROJECT_VOLUMES=$NEW_PROJECT_PATH/volumes
+
+cp skel ./
+mv skel 
+
+mkdir $NEW_PROJECT_PATH
+mkdir $NEW_PROJECT_SRC
+mkdir $NEW_PROJECT_VOLUMES
