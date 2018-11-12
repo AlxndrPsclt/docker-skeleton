@@ -1,32 +1,16 @@
 version: '3'
 
 services:
-{% set count= 3 | env('NUMBER_OF_RPI_NODES') | int %}
-{% for node_id in range(1, count+1) %}
-  underground-resistance-{{ "{:03d}".format(node_id) }}:
-    container_name: underground-resistance-{{ "{:03d}".format(node_id) }}
-    image: m0rf30/simonpi
-    stdin_open: true
-    tty: true
-    command: "simonpi rpi-3 -i /root/.simonpi/${SEED_IMAGE_FILENAME} -s 8"
-    privileged: true
-    volumes:
-      - /dev:/dev
-      - ${VIRTUAL_DISKS_PATH}/${CLUSTER_ID}/underground-resistance-{{ "{:03d}".format(node_id) }}:/root/.simonpi
-    ports:
-      - "2{{ "{:03d}".format(node_id) }}:2222"
-    networks:
-      - underground-resistance-net
-{% endfor %}
+  #command: "simonpi rpi-3 -i /root/.simonpi/${SEED_IMAGE_FILENAME} -s 8"  #Example for a jinja replacement
 
-  ansible:
-    build: ansible/app/
-    command: "meta-compose -t meta-compose.yml -o cluster-compose.yml"
+  python:
+    build: ./python/
+    command: "python main.py"
     volumes:
-      - ./ansible/playbooks:/usr/src/app/
+      - $VOLUMES_FOLDER/python:/usr/src/app/
     networks:
-      - underground-resistance-net
+      - my-app-network
 
 networks:
-  underground-resistance-net:
+  my-app-network:
 

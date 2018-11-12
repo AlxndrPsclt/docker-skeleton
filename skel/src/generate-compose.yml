@@ -4,9 +4,9 @@ services:
 
   metacompose:
     build: app/
-    command: "meta-compose -t meta-compose.yml -o cluster-compose.yml"
+    command: "meta-compose -t meta-compose.yml -o my_app-compose.yml"
     env_file:
       - ../.env
     volumes:
       - ./meta-compose.yml:/usr/src/app/meta-compose.yml
-      - ../cluster-compose.yml:/usr/src/app/cluster-compose.yml
+      - ./my_app-compose.yml:/usr/src/app/my_app-compose.yml
